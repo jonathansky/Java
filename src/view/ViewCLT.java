@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package view;
-
+//
 import model.Celetista;
 import control.CtrlCeletista;
 /**
