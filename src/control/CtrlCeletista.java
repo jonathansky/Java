@@ -5,13 +5,37 @@
  */
 package control;
 
+import java.nio.charset.MalformedInputException;
+import java.text.DecimalFormat;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author target
  */
 public class CtrlCeletista {
     
-    public double validaSalario(int horasTrabalhadas, double salario){
+    
+    
+    public static void validaCampos(view.ViewCadCLT guiCLT)throws Exception{
+        
+     if(guiCLT.jTextCPF.getText().equals("") ||
+        guiCLT.jTextEndereco.getText().equals("") ||
+        guiCLT.jTextHorasTrabalhadas.getText().equals("") ||
+        guiCLT.jTextImposto.getText().equals("") ||
+        guiCLT.jTextNome.getText().equals("") ||
+        guiCLT.jTextRG.getText().equals("")   || 
+        guiCLT.jTextSalarioBruto.getText().equals("") ||
+        guiCLT.jTextSalarioLiquido.getText().equals("") ||        
+        guiCLT.jTextTelefone.getText().equals(""))
+     {
+             throw new Exception("Por Favor Preencha Todos os campos.");
+     
+     }
+     
+    }
+       
+    public static double validaSalario(int horasTrabalhadas, double salario){
         
         double salarioBruto=0;
         int horaExtra=0;
@@ -24,12 +48,11 @@ public class CtrlCeletista {
                 salarioBruto=(double)horasTrabalhadas*horaExtra;    
             }           
     return salarioBruto;
-}
+} 
     
-    
-public void validaImposto(double salario){
+public static double validaImposto(double salario, view.ViewCadCLT guiCadCLT)throws MalformedInputException, Exception{
         
-    double imposto;
+    double imposto = 0;
     
         if(salario < 1.499_16){
             imposto=0;
@@ -49,11 +72,21 @@ public void validaImposto(double salario){
                     else
                         if(salario>= 3.743_20){
                            imposto=(salario*27.5)/100-692.78;
-                    }    
+                    }
+                        else
+                            if(guiCadCLT.jTextSalarioLiquido.getText().equals("")){
+                              throw 
+                                   new Exception("Calcule o salario bruto antes de verificar o imposto!");
+                            }
+        else{
+            throw 
+                 new Exception("Entrada Invalida, Digite um Valor Valido.");
+        }
         
+    return imposto;
 }       
 
-public void validaINSS(double salario){
+public static void validaINSS(double salario){
         
         if(salario<965.67){
             salario = (salario*8)/100;   

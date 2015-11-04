@@ -7,20 +7,26 @@ package view;
 //
 import model.Celetista;
 import control.CtrlCeletista;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 /**
  *
  * @author target
  */
-public class ViewCLT extends javax.swing.JFrame {
+public class ViewCadCLT extends javax.swing.JFrame {
 
     /**
-     * Creates new form ViewCLT
+     * Creates new form ViewCadCLT
      */
     
     RTI RTI;
+    Celetista clt = new Celetista();
+    
    
-    public ViewCLT() {
+    public ViewCadCLT() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -59,6 +65,11 @@ public class ViewCLT extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTextImposto.setEnabled(false);
+        jTextImposto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextImpostoActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Total De Imposto");
 
@@ -82,6 +93,11 @@ public class ViewCLT extends javax.swing.JFrame {
         jLabel7.setText("Salario Bruto");
 
         jButtonImposto.setText("Imposto");
+        jButtonImposto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonImpostoActionPerformed(evt);
+            }
+        });
 
         jButtonFechar.setText("Fechar");
         jButtonFechar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -102,6 +118,12 @@ public class ViewCLT extends javax.swing.JFrame {
             }
         });
 
+        jTextNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextNomeActionPerformed(evt);
+            }
+        });
+
         jLabel1.setText("Nome");
 
         jLabel2.setText("Endereço");
@@ -109,6 +131,11 @@ public class ViewCLT extends javax.swing.JFrame {
         jLabel3.setText("Telefone");
 
         jTextSalarioLiquido.setEnabled(false);
+        jTextSalarioLiquido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextSalarioLiquidoActionPerformed(evt);
+            }
+        });
 
         jLabel8.setText("Salario Liquido");
 
@@ -253,21 +280,22 @@ public class ViewCLT extends javax.swing.JFrame {
 
     private void jButtonCalculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCalculaActionPerformed
         // TODO add your handling code here:
-        
-        CtrlCeletista controleCLT = new CtrlCeletista();
-        
+                
         try {
             
             int hrTrabalhadas = Integer.parseInt(jTextHorasTrabalhadas.getText());
-            Double salario = (double)Integer.parseInt(jTextSalarioBruto.getText());
+            
+                    Double salario = (double)Integer.parseInt(jTextSalarioBruto.getText());
+                    salario = CtrlCeletista.validaSalario(hrTrabalhadas, salario);
+                    System.out.println(salario);
 
-            salario = controleCLT.validaSalario(hrTrabalhadas, salario);
-            
-            System.out.println(salario);
-            jTextSalarioLiquido.setText(salario.toString());
-            
+                    jTextSalarioLiquido.setText(salario.toString());
+                
             } catch (Exception e) {
                 
+             if(jTextHorasTrabalhadas.getText().equals("")){
+                    JOptionPane.showMessageDialog(null, "Por Favor Preencha o campo de horas Trabalhadas");
+                }
               
         }
     }//GEN-LAST:event_jButtonCalculaActionPerformed
@@ -275,13 +303,18 @@ public class ViewCLT extends javax.swing.JFrame {
     private void jButtonSalvaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvaActionPerformed
         // TODO add your handling code here:
         
-        Celetista clt = new Celetista();
+        try {
+            CtrlCeletista.validaCampos(this);
+            clt.setNome(jTextNome.getText());
+            clt.setCPF(jTextCPF.getText());
+            clt.setRG(jTextRG.getText());
+            clt.setSalarioMensal(jTextSalarioLiquido.getText());
+            RTI.arrCLT.add(clt); 
+            
+        } catch (Exception ex) {
+           JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
         
-        clt.setNome(jTextNome.getText());
-        clt.setCPF(jTextCPF.getText());
-        clt.setRG(jTextRG.getText());
-        clt.setSalarioMensal(jTextSalarioLiquido.getText());
-        RTI.arrCLT.add(clt); 
         
     }//GEN-LAST:event_jButtonSalvaActionPerformed
 
@@ -316,6 +349,29 @@ public class ViewCLT extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jTextSalarioBrutoActionPerformed
 
+    private void jTextSalarioLiquidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextSalarioLiquidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextSalarioLiquidoActionPerformed
+
+    private void jButtonImpostoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImpostoActionPerformed
+        // TODO add your handling code here:
+    try{
+        Double salario = Double.parseDouble(jTextSalarioLiquido.getText());        
+        Double imposto = CtrlCeletista.validaImposto(salario, this); 
+        jTextImposto.setText(imposto.toString());
+    }//GEN-LAST:event_jButtonImpostoActionPerformed
+        catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+    private void jTextImpostoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextImpostoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextImpostoActionPerformed
+
+    private void jTextNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextNomeActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -333,20 +389,22 @@ public class ViewCLT extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ViewCLT.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewCadCLT.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ViewCLT.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewCadCLT.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ViewCLT.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewCadCLT.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ViewCLT.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewCadCLT.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ViewCLT().setVisible(true);
+                new ViewCadCLT().setVisible(true);
+      
             }
         });
     }

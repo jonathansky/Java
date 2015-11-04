@@ -12,16 +12,16 @@ import model.Celetista;
  *
  * @author target
  */
-public class ViewPJ extends javax.swing.JFrame {
+public class ViewCadPJ extends javax.swing.JFrame {
 
     /**
      * Creates new form ViewPJ
      */
-    public ViewPJ() {
+    public ViewCadPJ() {
         initComponents();
     }
 
-    ViewPJ(ArrayList<Celetista> arrCLT) {
+    ViewCadPJ(ArrayList<Celetista> arrCLT) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -209,20 +209,21 @@ public class ViewPJ extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ViewPJ.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewCadPJ.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ViewPJ.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewCadPJ.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ViewPJ.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewCadPJ.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ViewPJ.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewCadPJ.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ViewPJ().setVisible(true);
+                new ViewCadPJ().setVisible(true);
             }
         });
     }

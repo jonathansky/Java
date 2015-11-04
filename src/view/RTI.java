@@ -24,6 +24,7 @@ public class RTI extends javax.swing.JFrame {
      */
     public RTI() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -96,13 +97,13 @@ public class RTI extends javax.swing.JFrame {
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
       
-       ViewCLT guiClt = new ViewCLT();
+       ViewCadCLT guiClt = new ViewCadCLT();
        guiClt.setVisible(true); 
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        ViewPJ guiPJ = new ViewPJ();
+        ViewCadPJ guiPJ = new ViewCadPJ();
         guiPJ.setVisible(true);
         
          PJ atrPJ = new PJ();
